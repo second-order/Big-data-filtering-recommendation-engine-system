@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Golden Wind</title>
+	<link rel="stylesheet" type="text/css" href=" {{url_for('static', filename = 'css/style.css')}} ">
+  <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+  <div class="login-page">
+  <div class="form">
+    <form class="login-form" method="POST">
+      <input class = "under_container_input" type="text" placeholder="Username" name="username" value="{{
+                request.form.username }}">
+      <input class = "under_container_input" type="password" placeholder="Password" name="password" value="{{
+                request.form.password }}">
+      <input class = "under_container_input" type="password" placeholder="Password again" name="password_again" value="{{
+            request.form.password_again }}">
+      <input class = "button" type="submit" value="注册">
+      <p class="message">Already registered? <a href="{{ url_for('login') }}">Sign In</a></p>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+    </form>
+    <!-- <form class="login-form">
+      <input type="text" placeholder="username"/>
+      <input type="password" placeholder="password"/>
+      <button>login</button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form> -->
+  </div>
+  </div>
+  <!-- <div class="container">
+        <div class="up_container">
+          <div class="up_container_img"><img src="{{ url_for('static', filename = 'img/logo.png') }}"></div>
+        </div>
+        <div class="under_container">
+          <h2>注册</h2>
+          <div class="banner_content">
+            <div class="box_content">
+              <form  class = "form" action="" method="post">
+            <p>
+                <label>用户名</label>
+                <input class = "under_container_input" type="text" placeholder="Username" name="username" value="{{
+                request.form.username }}">
+            </p>
+            <p>
+                <label>密码&nbsp&nbsp</label>
+                <input class = "under_container_input" type="password" placeholder="Password" name="password" value="{{
+                request.form.password }}">
+            </p>
+            <p>
+              <label>请再次输入密码</label>
+              <input class = "under_container_input" type="password" placeholder="Password again" name="password_again" value="{{
+            request.form.password_again }}">
+          </p>
+            <p><input class="btn btn-default" type="submit" value="登陆"></p>
+            </form>
+            {% if error %}
+              <p class="error"><strong>Error:</strong> {{ error }}
+            {% endif %}
+              
+            </div>
+            
+          </div>
+        </div>
+    -->     
+    <!-- </div>
+    <div class="container">
+    	<h1>Please register</h1>
+      <br>
+      <div class="under_container">
+        <form action="" method="post">
+          <p>
+              <label>用户名</label>
+              <input class = "under_container_input" type="text" placeholder="Username" name="username" value="{{
+              request.form.username }}">
+          </p>
+          <p>
+              <label>密码</label>
+              <input class = "under_container_input" type="password" placeholder="Password" name="password" value="{{
+            request.form.password }}">
+          </p>
+          
+          <p><input class="btn btn-default" type="submit" value="Register"></p>
+        </form>
+        {% if error %}
+          <p class="error"><strong>Error:</strong> {{ error }}
+        {% endif %}
+      </div> -->
+</body>
+</html>

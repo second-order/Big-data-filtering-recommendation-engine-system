@@ -1,0 +1,115 @@
+// Search result item markup and config
+
+var tagURL = "https://webflow.com/templates/tag/";
+
+var freeCMSEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__secondary">Free</div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div><div class="template__feature-list"><div class="template__feature"><div class="feature__icon feature__icon--ecommerce"></div><div class="feature__tooltip"><div>Ecommerce functionality built in Just add products.</div></div></div><div class="template__feature"><div class="feature__icon feature__icon--cms"></div><div class="feature__tooltip"><div>Dynamic content and a visual CMS built in.</div></div></div></div></div></div>');
+var freeCMSNoEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__secondary">Free</div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div><div class="template__feature-list"><div class="template__feature"><div class="feature__icon feature__icon--cms"></div><div class="feature__tooltip"><div>Dynamic content and a visual CMS built in.</div></div></div></div></div></div>');
+var freeNoCMSEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__secondary">Free</div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div><div class="template__feature-list"><div class="template__feature"><div class="feature__icon feature__icon--ecommerce"></div><div class="feature__tooltip"><div>Ecommerce functionality built in Just add products.</div></div></div></div></div></div>');
+var freeNoCMSNoEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__secondary">Free</div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div></div></div>');
+var paidCMSEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__price"><div>$</div><div>{{price}}</div></div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div><div class="template__feature-list"><div class="template__feature"><div class="feature__icon feature__icon--ecommerce"></div><div class="feature__tooltip"><div>Ecommerce functionality built in Just add products.</div></div></div><div class="template__feature"><div class="feature__icon feature__icon--cms"></div><div class="feature__tooltip"><div>Dynamic content and a visual CMS built in.</div></div></div></div></div></div>');
+var paidCMSNoEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__price"><div>$</div><div>{{price}}</div></div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div><div class="template__feature-list"><div class="template__feature"><div class="feature__icon feature__icon--cms"></div><div class="feature__tooltip"><div>Dynamic content and a visual CMS built in.</div></div></div></div></div></div>');
+var paidNoCMSEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__price"><div>$</div><div>{{price}}</div></div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div><div class="template__feature-list"><div class="template__feature"><div class="feature__icon feature__icon--ecommerce"></div><div class="feature__tooltip"><div>Ecommerce functionality built in Just add products.</div></div></div></div></div></div>');
+var paidNoCMSNoEcommerce = Hogan.compile('<div class="template-wrapper"><div class="template"><a href="{{url}}" class="template__body w-inline-block"><div style="background-image:url({{image}})" class="template__image"><div class="template__overlay"></div></div></a><div class="template__footer"><div class="footer__row"><a href="{{url}}" class="template__primary">{{name}}</a><div class="template__price"><div>$</div><div>{{price}}</div></div></div><div class="footer__row"><a href="'+tagURL+'{{tagSlug}}" class="template__secondary">{{tag}}</a></div></div></div></div>');
+
+var customRenderer = function(documentType, item) {
+  var data = {
+    name: item['short-name'],
+    price: item['price'],
+    url: item['url'],
+    cms: item['cms'],
+    ecommerce: item['ecommerce'],
+    tag: item['primary-tag'],
+    tagSlug: item['tag-slug'],
+    image: item['thumbnail'],
+  };
+  // TODO find nicer way to do this
+  if (item['price'] == 'Free' && item['cms'] == 'true' && item['ecommerce'] == 'true'){
+    // freeCMSEcommerce
+    return freeCMSEcommerce.render(data);
+  } else if (item['price'] == 'Free' && item['cms'] == 'true' && item['ecommerce'] !== 'true'){
+    // freeCMSNoEcommerce
+    return freeCMSNoEcommerce.render(data);
+  } else if (item['price'] == 'Free' && item['cms'] !== 'true' && item['ecommerce'] == 'true'){
+    // freeNoCMSEcommerce
+    return freeNoCMSEcommerce.render(data);
+  } else if (item['price'] == 'Free' && item['cms'] !== 'true' && item['ecommerce'] !== 'true'){
+    // freeNoCMSNoEcommerce
+    return freeNoCMSNoEcommerce.render(data);
+  } else if (item['price'] !== 'Free' && item['cms'] == 'true' && item['ecommerce'] == 'true'){
+    // paidCMSEcommerce
+    return paidCMSEcommerce.render(data);
+  } else if (item['price'] !== 'Free' && item['cms'] == 'true' && item['ecommerce'] !== 'true'){
+    // paidCMSNoEcommerce
+    return paidCMSNoEcommerce.render(data);
+  } else if (item['price'] !== 'Free' && item['cms'] !== 'true' && item['ecommerce'] == 'true'){
+    // paidNoCMSEcommerce
+    return paidNoCMSEcommerce.render(data);
+  } else if (item['price'] !== 'Free' && item['cms'] !== 'true' && item['ecommerce'] !== 'true'){
+    // paidNoCMSNoEcommerce
+    return paidNoCMSNoEcommerce.render(data);
+  }
+};
+
+var customLoadingFunction = function(query, $resultContainer) {
+    $resultContainer.html('<div class="loader">loading...</div>');
+  };
+
+var customPaginationRenderer = function (type, currentPage, totalPages) {
+    var pages = '<div class="pagination">',
+      previousPage, nextPage;
+    if (currentPage != 1) {
+      previousPage = currentPage - 1;
+      pages = pages + '<a href="" id="btn-prev" class="w-button btn secondary paging" data-hash="true" data-page="' + previousPage + '"> &larr; Previous</a>';
+    }
+    if (currentPage < totalPages) {
+      nextPage = currentPage + 1;
+      pages = pages + '<a href="" id="btn-next" class="w-button btn next paging" data-hash="true" data-page="' + nextPage + '">Next &rarr;</a>';
+    }
+    pages += '</div>';
+    return pages;
+  };
+  
+// Pull hashes from url
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('#') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+// Swiftype Initialization
+$(function() {
+  $('#st-search-input').swiftypeSearch({
+    resultContainingElement: '#st-results-container',
+    engineKey: 'ERBy-RxJcSSayESKfTgY',
+    renderFunction: customRenderer,
+    renderPaginationForType: customPaginationRenderer,
+    loadingFunction: customLoadingFunction,
+    perPage: 16,
+    sortField: function() {
+      return {page: $('#st-sort-field').val()};
+    }
+  });
+});
+
+// Redirect to search page
+$("#search-form").on('submit',function(event) {
+  var query = $("#st-search-input").val();
+  
+  $('#st-search-input').blur();
+  window.location = "http://webflow.com/templates/search-results#stq=" + query;
+  
+  // Update header with new query on form submit
+  $("#query-header").text('Search results for ' + '“' + decodeURI(query) + '”');
+});
+
+// Append query to header and search field on page loading
+query = decodeURI(getUrlVars()["stq"]);
+$("#query-header").text('Search results for ' + '“' + query + '”');
+$(".st-search-input").val(query);
