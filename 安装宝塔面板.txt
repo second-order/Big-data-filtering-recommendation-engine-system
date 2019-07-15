@@ -1,0 +1,26 @@
+在纯净的Linux服务器系统中(Ubuntu或者CentOS)
+
+安装：
+CentOS
+yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh
+
+Ubuntu
+wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh && sudo bash install.sh
+
+更新:
+wget -O update.sh http://download.bt.cn/install/update.sh && sh update.sh
+
+查看面板：
+/etc/init.d/bt default
+可以看到登录的地址即账号密码
+
+Bt-Panel: http://X.X.X.X:8888/97da8735
+username: XXXXXXXX
+password: YYYYYYYY
+
+
+Pycharm下生成requirements.txt
+pip freeze > requirements.txt
+
+ LNMP、LAMP
+
